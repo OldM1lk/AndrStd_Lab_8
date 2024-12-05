@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.lab_8"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.lab_8"
@@ -45,4 +45,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.glide)
 }
