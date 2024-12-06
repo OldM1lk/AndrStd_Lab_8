@@ -13,7 +13,8 @@ class Adapter(diffCallback: DiffCallback) : ListAdapter<WeatherEntry, Adapter.Vi
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(weatherEntry: WeatherEntry) {
             itemView.findViewById<TextView>(R.id.date).text = weatherEntry.dt_txt
-            itemView.findViewById<TextView>(R.id.temp).text = weatherEntry.main.temp.toString()
+            val tempCel = weatherEntry.main.temp - 273.15
+            itemView.findViewById<TextView>(R.id.temp).text = String.format("%.2f °C", tempCel)
             val iconUrl = "https://openweathermap.org/img/wn/${weatherEntry.weather[0].icon}@2x.png"
             Glide.with(itemView.context)
                 .load(iconUrl)

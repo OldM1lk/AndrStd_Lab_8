@@ -1,8 +1,6 @@
 package com.example.lab_8
 
-import com.google.gson.annotations.SerializedName
-
-data class WeatherForecastResponse(
+data class WeatherForecast(
     val cod: String,
     val message: Int,
     val cnt: Int,
@@ -18,8 +16,6 @@ data class WeatherEntry(
     val wind: Wind,
     val visibility: Int,
     val pop: Double,
-    val rain: Rain?,
-    val snow: Snow?,
     val sys: Sys,
     val dt_txt: String
 )
@@ -51,16 +47,6 @@ data class Wind(
     val speed: Double,
     val deg: Int,
     val gust: Double
-)
-
-data class Rain(
-    @SerializedName("3h")
-    val threeHourVolume: Double
-)
-
-data class Snow(
-    @SerializedName("3h")
-    val threeHourVolume: Double
 )
 
 data class Sys(

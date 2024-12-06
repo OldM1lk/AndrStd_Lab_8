@@ -20,12 +20,16 @@ object RetrofitClient {
 }
 
 interface RetrofitServices {
-    @GET
-    fun getWeatherList(@Url url: String): Call<WeatherForecastResponse>
+    @GET("data/2.5/forecast")
+    fun getWeatherList(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") apiKey: String
+    ): Call<WeatherForecast>
 }
 
 object Common {
-    private val BASE_URL = "https://api.openweathermap.org/data/2.5/forecast?lat=54.2021736&lon=30.2964015&appid=d70b749fd7a3d107010b8a56df59e94c"
+    private val BASE_URL = "https://api.openweathermap.org/"
     val retrofitService: RetrofitServices
         get() = RetrofitClient.getClient(BASE_URL).create(RetrofitServices::class.java)
 }

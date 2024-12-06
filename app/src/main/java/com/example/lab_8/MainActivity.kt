@@ -7,11 +7,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import retrofit2.Retrofit
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Call
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,22 +29,20 @@ class MainActivity : AppCompatActivity() {
         rView.adapter = adapter
         rView.layoutManager = LinearLayoutManager(this)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/forecast?lat=54.2021736&lon=30.2964015&appid=d70b749fd7a3d107010b8a56df59e94c")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val service = retrofit.create(RetrofitServices::class.java)
-        val call = service.getWeatherList("https://api.openweathermap.org/data/2.5/forecast?lat=54.2021736&lon=30.2964015&appid=d70b749fd7a3d107010b8a56df59e94c")
+        val mService: RetrofitServices = Common.retrofitService
+        val lat = 54.2021736
+        val lon = 30.2964015
+        val appid = "d70b749fd7a3d107010b8a56df59e94c"
 
-        call.enqueue(object : Callback<WeatherForecastResponse> {
-            override fun onResponse(call: Call<WeatherForecastResponse>, response: Response<WeatherForecastResponse>) {
+        mService.getWeatherList(lat, lon, appid).enqueue(object : Callback<WeatherForecast> {
+            override fun onResponse(call: Call<WeatherForecast>, response: Response<WeatherForecast>) {
                 if (response.isSuccessful) {
                     val forecast = response.body()
                     adapter.submitList(forecast!!.list)
                 }
             }
 
-            override fun onFailure(call: Call<WeatherForecastResponse>, t: Throwable) { }
+            override fun onFailure(call: Call<WeatherForecast>, t: Throwable) { }
         })
     }
 }
